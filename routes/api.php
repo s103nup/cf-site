@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'v1'], function () {
+    $version = 'v1';
+    Route::get('log/legacy-query-sync-generator', 'Api\Log\ToolsController@legacyQuerySyncGenerator')
+        ->name($version . '.legacy-query-sync-generator');
+});
