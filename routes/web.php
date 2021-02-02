@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('log-tools');
 });
+
+Route::match(['get', 'post'], 'log-tools', function () {
+    return view('log-tools');
+})->name('log-tools');
