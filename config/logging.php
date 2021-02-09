@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['daily', 'unexpectedlog'],
             'ignore_exceptions' => false,
         ],
 
@@ -99,6 +99,13 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+
+        // CF exception mail log configuration
+        'unexpectedlog' => [
+            'driver' => 'monolog',
+            'level' => 'notice',
+            'handler' => \App\Handlers\LogMailerHandler::class,
+        ]
     ],
 
 ];
