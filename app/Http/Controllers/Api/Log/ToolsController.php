@@ -31,9 +31,9 @@ final class ToolsController extends Controller
             data_set($findSource, 'type', '"type": "' . $type . '"');
         }
 
-        if ($request->has('start') && $request->has('end')) {
-            $start = $this->dateService->toTimestampWithMicro($request->input('start'));
-            $end = $this->dateService->toTimestampWithMicro($request->input('end'));
+        if ($request->has('startDate') && $request->has('endDate')) {
+            $start = $this->dateService->toTimestampWithMicro($request->input('startDate'));
+            $end = $this->dateService->toTimestampWithMicro($request->input('endDate'));
             data_set($findSource, 'date', '"created_at": {$gt: ' . $start . ', $lt: ' . $end . '}',);
         }
 
