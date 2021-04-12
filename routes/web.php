@@ -12,9 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('log-tools');
+    return redirect(route('log-tools'));
 });
 
 Route::match(['get', 'post'], 'log-tools', function () {
-    return view('log-tools');
+    $viewData = [
+        'apiUrl' => route('v1.legacy-query-sync-generator'),
+    ];
+    return view('log-tools', $viewData);
 })->name('log-tools');

@@ -4,16 +4,14 @@
             {{ title }}
         </div>
         <div class="card-body">
-            <form @submit.prevent method="POST" action="https://www.google.com">
-                @csrf
-
+            <form @submit.prevent method="POST">
                 <div class="form-group row">
                     <label for="logType" class="col-md-4 col-form-label text-md-right">Log Type</label>
 
                     <div class="col-md-6">
                         <select v-model="generateForm.logType" class="form-control form-control-sm" id="logType" name="logType" autofocus>
-                            <option v-for="option in logTypeOptions" :value="option.value">
-                                {{ option.text }}
+                            <option v-for="(option, index) in logTypeOptions" :value="option" :key="index">
+                                {{ option }}
                             </option>
                         </select>
                     </div>
@@ -23,7 +21,13 @@
                     <label for="startDate" class="col-md-4 col-form-label text-md-right">Start Date</label>
 
                     <div class="col-md-6">
-                        <input v-model="generateForm.startDate" id="startDate" type="text" class="form-control form-control-sm" name="startDate">
+                        <date-picker
+                            v-model="generateForm.startDate"
+                            format="YYYY-MM-DD HH:00"
+                            value-type="format"
+                            type="datetime"
+                            input-class="form-control form-control-sm"
+                        ></date-picker>
                     </div>
                 </div>
 
@@ -31,7 +35,13 @@
                     <label for="endDate" class="col-md-4 col-form-label text-md-right">End Date</label>
 
                     <div class="col-md-6">
-                        <input v-model="generateForm.endDate" id="endDate" type="text" class="form-control form-control-sm" name="endDate">
+                        <date-picker
+                            v-model="generateForm.endDate"
+                            format="YYYY-MM-DD HH:00"
+                            value-type="format"
+                            type="datetime"
+                            input-class="form-control form-control-sm"
+                        ></date-picker>
                     </div>
                 </div>
 
@@ -65,25 +75,32 @@
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import moment from 'moment';
+
 export default {
+    components: {
+        DatePicker
+    },
     data() {
         return {
             title: 'MongoDB Syntax Generator',
             errorMessage: '',
             generateForm: {
-                logType: '02',
-                startDate: '',
-                endDate: '',
+                logType: 'Invoice_B2B',
+                startDate: this.getDateTimeAfterDays(),
+                endDate: this.getDateTimeAfterDays(1),
                 logData: '',
             },
             mongoSyntax: '',
             hasError: false,
 
             logTypeOptions: [
-                { text: 'Invoice_B2B', value: '01'},
-                { text: 'Invoice_B2C', value: '02'},
-                { text: 'Invoice_MultimediaPrint', value: '03'},
-            ]
+                'Invoice_B2B',
+                'Invoice_B2C',
+                'Invoice_MultimediaPrint',
+            ],
         }
     },
     methods: {
@@ -91,7 +108,7 @@ export default {
             console.log('generateSyntax');
             this.mongoSyntax = ''
             let queryString = Object.keys(this.generateForm).map(key => key + '=' + this.generateForm[key]).join('&');
-            let url = 'https://demo-dev.ecpay.com.tw/api/v1/log/legacy-query-sync-generator?'  + queryString;
+            let url = this.apiUrl + '?'  + queryString;
             axios({
                 method: 'GET',
                 url: url,
@@ -108,7 +125,13 @@ export default {
                 this.hasError = true;
                 this.errorMessage = '查無資料';
             })
-        }
-    }
+        },
+        // 取得日期時間
+        getDateTimeAfterDays(afterDays = 0) {
+            const dateString = moment().add(afterDays, 'days').format('YYYY-MM-DD 00:00');
+            return dateString;
+        },
+    },
+    props: ['apiUrl'],
 }
 </script>

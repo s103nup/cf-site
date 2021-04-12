@@ -4,6 +4,6 @@
 
 @section('body')
 <div class="container">
-    <mongo-syntax></mongo-syntax>
+    <mongo-syntax api-url="{{ $apiUrl }}"></mongo-syntax>
 </div>
 @endsection
