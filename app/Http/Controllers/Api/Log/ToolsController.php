@@ -24,17 +24,29 @@ final class ToolsController extends Controller
     public function legacyQuerySyncGenerator(Request $request)
     {
         $collection = 'event_log';
-        $type = $request->input('type');
-        $start = $this->dateService->toTimestampWithMicro($request->input('start'));
-        $end = $this->dateService->toTimestampWithMicro($request->input('end'));
-        $logData = $request->input('logData');
+        $findSource = [];
 
-        $findSource = [
-            'type' => '"type": "' . $type . '"',
-            'date' => '"created_at": {$gt: ' . $start . ', $lt: ' . $end . '}',
-            'logData' => '"log_data": /' . $logData . '/',
-        ];
-        $find = 'find({' . implode(',', $findSource) . '})';
+        if ($request->has('logType')) {
+            $type = $request->input('logType');
+            data_set($findSource, 'type', '"type": "' . $type . '"');
+        }
+
+        if ($request->has('startDate') && $request->has('endDate')) {
+            $start = $this->dateService->toTimestampWithMicro($request->input('startDate'));
+            $end = $this->dateService->toTimestampWithMicro($request->input('endDate'));
+            data_set($findSource, 'date', '"created_at": {$gt: ' . $start . ', $lt: ' . $end . '}',);
+        }
+
+        if ($request->has('logData') && $request->filled('logData')) {
+            $logData = $request->input('logData');
+            data_set($findSource, 'logData', '"log_data": /' . $logData . '/');
+        }
+
+        $find = 'find()';
+        if ($findSource !== []) {
+            $find = 'find({' . implode(',', $findSource) . '})';
+            unset($findSource);
+        }
 
         $dataSource = [
             'db',
