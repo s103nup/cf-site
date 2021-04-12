@@ -26,8 +26,8 @@ final class ToolsController extends Controller
         $collection = 'event_log';
         $findSource = [];
 
-        if ($request->has('type')) {
-            $type = $request->input('type');
+        if ($request->has('logType')) {
+            $type = $request->input('logType');
             data_set($findSource, 'type', '"type": "' . $type . '"');
         }
 
