@@ -19,7 +19,7 @@ class CurrentConditionsDisplay implements ObserverInterface, DisplayElementInter
 
     public function display(): void
     {
-        echo 'Current conditions: ' . $this->temperature . 'F derees and ' . $this->humidity . '% humidity' . '<br>';
+        dump('Current conditions: ' . $this->temperature . 'F derees and ' . $this->humidity . '% humidity');
     }
 
     public function update(float $temperature, float $humidity, float $pressure): void

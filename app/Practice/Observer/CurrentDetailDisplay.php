@@ -20,7 +20,7 @@ class CurrentDetailDisplay implements ObserverInterface, DisplayElementInterface
 
     public function display(): void
     {
-        echo 'Detail conditions: ' . $this->temperature . 'F derees and ' . $this->humidity . '% humidity and pressure ' . $this->pressure . '<br>';
+        dump('Detail conditions: ' . $this->temperature . 'F derees and ' . $this->humidity . '% humidity and pressure ' . $this->pressure);
     }
 
     public function update(float $temperature, float $humidity, float $pressure): void

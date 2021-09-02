@@ -21,3 +21,9 @@ Route::match(['get', 'post'], 'log-tools', function () {
     ];
     return view('log-tools', $viewData);
 })->name('log-tools');
+
+Route::group(['prefix' => 'practice/pattern', 'namespace' => 'Web\Practice'], function () {
+    Route::get('decorator', 'PatternController@decorator');
+    Route::get('factory', 'PatternController@factory');
+    Route::get('observer', 'PatternController@observer');
+});
