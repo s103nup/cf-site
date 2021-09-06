@@ -14,9 +14,24 @@ use App\Practice\Factory\Creator\NyPizzaStore;
 use App\Practice\Observer\CurrentDetailDisplay;
 use App\Practice\Factory\Creator\ChicagoPizzaStore;
 use App\Practice\Observer\CurrentConditionsDisplay;
+use App\Practice\AbstractFactory\Factory\ChicagoPizzaStore as NewChicagoPizzaStore;
+use App\Practice\AbstractFactory\Factory\NyPizzaStore as NewNyPizzaStore;
 
 class PatternController extends Controller
 {
+    public function abstractFactory(): void
+    {
+        dump('Abstract Factory Pattern');
+        $nyStore = new NewNyPizzaStore();
+        $chicagoStore = new NewChicagoPizzaStore();
+
+        $nyCheesePizza = $nyStore->orderPizza('cheese');
+        dump('Ethen order a ' . $nyCheesePizza->getName());
+
+        $chicagoCheesePizza = $chicagoStore->orderPizza('cheese');
+        dump('Joel ordered a ' . $chicagoCheesePizza->getName());
+    }
+
     public function decorator(): void
     {
         $espresso = new Espresso();
@@ -37,6 +52,7 @@ class PatternController extends Controller
 
     public function factory(): void
     {
+        dump('Factory Pattern');
         $nyStore = new NyPizzaStore();
         $chicagoStore = new ChicagoPizzaStore();
 
