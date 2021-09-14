@@ -27,4 +27,5 @@ Route::group(['prefix' => 'practice/pattern', 'namespace' => 'Web\Practice'], fu
     Route::get('decorator', 'PatternController@decorator');
     Route::get('factory', 'PatternController@factory');
     Route::get('observer', 'PatternController@observer');
+    Route::get('singleton', 'PatternController@singleton');
 });

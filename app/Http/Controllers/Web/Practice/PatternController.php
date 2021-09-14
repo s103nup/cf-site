@@ -8,14 +8,15 @@ use App\Practice\Decorator\Mocha;
 use App\Http\Controllers\Controller;
 use App\Practice\Decorator\Espresso;
 use App\Practice\Decorator\DarkRoast;
+use App\Practice\Singleton\Singleton;
 use App\Practice\Decorator\HouseBlend;
 use App\Practice\Observer\WeatherData;
 use App\Practice\Factory\Creator\NyPizzaStore;
 use App\Practice\Observer\CurrentDetailDisplay;
 use App\Practice\Factory\Creator\ChicagoPizzaStore;
 use App\Practice\Observer\CurrentConditionsDisplay;
-use App\Practice\AbstractFactory\Factory\ChicagoPizzaStore as NewChicagoPizzaStore;
 use App\Practice\AbstractFactory\Factory\NyPizzaStore as NewNyPizzaStore;
+use App\Practice\AbstractFactory\Factory\ChicagoPizzaStore as NewChicagoPizzaStore;
 
 class PatternController extends Controller
 {
@@ -71,5 +72,13 @@ class PatternController extends Controller
 
         $weatherData->setMeasurements(80, 65, 30.4);
         $weatherData->setMeasurements(82, 70, 29.2);
+    }
+
+    public function singleton(): void
+    {
+        $instance01 = Singleton::getInstance();
+        $instance01->printId();
+        $instance02 = Singleton::getInstance();
+        $instance02->printId();
     }
 }
