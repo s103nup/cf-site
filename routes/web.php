@@ -22,10 +22,15 @@ Route::match(['get', 'post'], 'log-tools', function () {
     return view('log-tools', $viewData);
 })->name('log-tools');
 
-Route::group(['prefix' => 'practice/pattern', 'namespace' => 'Web\Practice'], function () {
-    Route::get('abstract-factory', 'PatternController@abstractFactory');
-    Route::get('decorator', 'PatternController@decorator');
-    Route::get('factory', 'PatternController@factory');
-    Route::get('observer', 'PatternController@observer');
-    Route::get('singleton', 'PatternController@singleton');
+
+Route::group(['prefix' => 'practice', 'namespace' => 'Web\Practice'], function () {
+    Route::group(['prefix' => 'pattern'], function () {
+        Route::get('abstract-factory', 'PatternController@abstractFactory');
+        Route::get('decorator', 'PatternController@decorator');
+        Route::get('factory', 'PatternController@factory');
+        Route::get('observer', 'PatternController@observer');
+        Route::get('singleton', 'PatternController@singleton');
+        Route::get('command', 'PatternController@command');
+    });
+    Route::get('example/export-csv', 'ExampleController@exportCsv');
 });
