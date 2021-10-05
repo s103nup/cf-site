@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers\Web\Practice;
 
+use App\Practice\Command\Light;
 use App\Practice\Decorator\Soy;
+use App\Practice\Command\Stereo;
 use App\Practice\Decorator\Whip;
 use App\Practice\Decorator\Mocha;
 use App\Http\Controllers\Controller;
+use App\Practice\Command\GarageDoor;
 use App\Practice\Decorator\Espresso;
 use App\Practice\Decorator\DarkRoast;
 use App\Practice\Singleton\Singleton;
 use App\Practice\Decorator\HouseBlend;
 use App\Practice\Observer\WeatherData;
+use App\Practice\Command\LightOnCommand;
+use App\Practice\Command\LightOffCommand;
+use App\Practice\Command\StereoOffCommand;
+use App\Practice\Command\GarageDoorUpCommand;
+use App\Practice\Command\SimpleRemoteControl;
 use App\Practice\Factory\Creator\NyPizzaStore;
+use App\Practice\Command\GarageDoorDownCommand;
+use App\Practice\Command\GarageDoorOpenCommand;
+use App\Practice\Command\StereoOnWithCdCommand;
 use App\Practice\Observer\CurrentDetailDisplay;
 use App\Practice\Factory\Creator\ChicagoPizzaStore;
 use App\Practice\Observer\CurrentConditionsDisplay;
@@ -80,5 +91,42 @@ class PatternController extends Controller
         $instance01->printId();
         $instance02 = Singleton::getInstance();
         $instance02->printId();
+    }
+
+    public function command(): void
+    {
+        $remoteControl = new SimpleRemoteControl();
+        
+        $livingRoomLight = new Light('Living Room');
+        $kitchenLight = new Light('Kitchen');
+        $garageDoor = new GarageDoor('');
+        $livingRoomStereo = new Stereo('Living Room');
+
+        $livingRoomLightOn = new LightOnCommand($livingRoomLight);
+        $livingRoomLightOff = new LightOffCommand($livingRoomLight);
+        $kitchenLightOn = new LightOnCommand($kitchenLight);
+        $kitchenLightOff = new LightOffCommand($kitchenLight);
+        
+        $garageDoorUp = new GarageDoorUpCommand($garageDoor);
+        $garageDoorDown = new GarageDoorDownCommand($garageDoor);
+
+        $livingRoomStereoOnWithCd = new StereoOnWithCdCommand($livingRoomStereo);
+        $livingRoomStereoOff = new StereoOffCommand($livingRoomStereo);
+
+        $remoteControl->setCommand(0, $livingRoomLightOn, $livingRoomLightOff);
+        $remoteControl->setCommand(1, $kitchenLightOn, $kitchenLightOff);
+        $remoteControl->setCommand(2, $garageDoorUp, $garageDoorDown);
+        $remoteControl->setCommand(3, $livingRoomStereoOnWithCd, $livingRoomStereoOff);
+
+        dump($remoteControl);
+
+        $remoteControl->onButtonWasPressed(0);
+        $remoteControl->offButtonWasPressed(0);
+        $remoteControl->onButtonWasPressed(1);
+        $remoteControl->offButtonWasPressed(1);
+        $remoteControl->onButtonWasPressed(2);
+        $remoteControl->offButtonWasPressed(2);
+        $remoteControl->onButtonWasPressed(3);
+        $remoteControl->offButtonWasPressed(3);
     }
 }
