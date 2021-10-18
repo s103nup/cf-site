@@ -34,3 +34,6 @@ Route::group(['prefix' => 'practice', 'namespace' => 'Web\Practice'], function (
     });
     Route::get('example/export-csv', 'ExampleController@exportCsv');
 });
+
+Route::get('test', function () {
+});

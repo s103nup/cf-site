@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers\Web\Practice;
 
-use App\Practice\Command\Light;
 use App\Practice\Decorator\Soy;
-use App\Practice\Command\Stereo;
 use App\Practice\Decorator\Whip;
 use App\Practice\Decorator\Mocha;
 use App\Http\Controllers\Controller;
-use App\Practice\Command\GarageDoor;
+use App\Practice\Command\CeilingFan;
 use App\Practice\Decorator\Espresso;
 use App\Practice\Decorator\DarkRoast;
 use App\Practice\Singleton\Singleton;
 use App\Practice\Decorator\HouseBlend;
 use App\Practice\Observer\WeatherData;
-use App\Practice\Command\LightOnCommand;
-use App\Practice\Command\LightOffCommand;
-use App\Practice\Command\StereoOffCommand;
-use App\Practice\Command\GarageDoorUpCommand;
 use App\Practice\Command\SimpleRemoteControl;
+use App\Practice\Command\CeilingFanOffCommand;
 use App\Practice\Factory\Creator\NyPizzaStore;
-use App\Practice\Command\GarageDoorDownCommand;
-use App\Practice\Command\StereoOnWithCdCommand;
+use App\Practice\Command\CeilingFanHighCommand;
 use App\Practice\Observer\CurrentDetailDisplay;
+use App\Practice\Command\CeilingFanMediumCommand;
 use App\Practice\Factory\Creator\ChicagoPizzaStore;
 use App\Practice\Observer\CurrentConditionsDisplay;
 use App\Practice\AbstractFactory\Factory\NyPizzaStore as NewNyPizzaStore;
@@ -94,55 +89,23 @@ class PatternController extends Controller
 
     public function command(): void
     {
-        // Basic
-        // $remoteControl = new SimpleRemoteControl();
-        
-        // $livingRoomLight = new Light('Living Room');
-        // $kitchenLight = new Light('Kitchen');
-        // $garageDoor = new GarageDoor('');
-        // $livingRoomStereo = new Stereo('Living Room');
-
-        // $livingRoomLightOn = new LightOnCommand($livingRoomLight);
-        // $livingRoomLightOff = new LightOffCommand($livingRoomLight);
-        // $kitchenLightOn = new LightOnCommand($kitchenLight);
-        // $kitchenLightOff = new LightOffCommand($kitchenLight);
-        
-        // $garageDoorUp = new GarageDoorUpCommand($garageDoor);
-        // $garageDoorDown = new GarageDoorDownCommand($garageDoor);
-
-        // $livingRoomStereoOnWithCd = new StereoOnWithCdCommand($livingRoomStereo);
-        // $livingRoomStereoOff = new StereoOffCommand($livingRoomStereo);
-
-        // $remoteControl->setCommand(0, $livingRoomLightOn, $livingRoomLightOff);
-        // $remoteControl->setCommand(1, $kitchenLightOn, $kitchenLightOff);
-        // $remoteControl->setCommand(2, $garageDoorUp, $garageDoorDown);
-        // $remoteControl->setCommand(3, $livingRoomStereoOnWithCd, $livingRoomStereoOff);
-
-        // $remoteControl->onButtonWasPressed(0);
-        // $remoteControl->offButtonWasPressed(0);
-        // $remoteControl->onButtonWasPressed(1);
-        // $remoteControl->offButtonWasPressed(1);
-        // $remoteControl->onButtonWasPressed(2);
-        // $remoteControl->offButtonWasPressed(2);
-        // $remoteControl->onButtonWasPressed(3);
-        // $remoteControl->offButtonWasPressed(3);
-
-        // Undo
         $remoteControl = new SimpleRemoteControl();
+
+        $ceilingFan = new CeilingFan('Living Room');
+
+        $ceilingFanMedium = new CeilingFanMediumCommand($ceilingFan);
+        $ceilingFanHigh = new CeilingFanHighCommand($ceilingFan);
+        $ceilingFanOff = new CeilingFanOffCommand($ceilingFan);
         
-        $livingRoomLight = new Light('Living Room');
+        $remoteControl->setCommand(0, $ceilingFanMedium, $ceilingFanOff);
+        $remoteControl->setCommand(1, $ceilingFanHigh, $ceilingFanOff);
 
-        $livingRoomLightOn = new LightOnCommand($livingRoomLight);
-        $livingRoomLightOff = new LightOffCommand($livingRoomLight);
-
-        $remoteControl->setCommand(0, $livingRoomLightOn, $livingRoomLightOff);
-
-        $remoteControl->onButtonWasPressed(0);
-        $remoteControl->offButtonWasPressed(0);
+        $remoteControl->onButtonWasPushed(0);
+        $remoteControl->offButtonWasPushed(0);
         dump($remoteControl);
         $remoteControl->undoButtonWasPushed();
-        $remoteControl->offButtonWasPressed(0);
-        $remoteControl->onButtonWasPressed(0);
+
+        $remoteControl->onButtonWasPushed(1);
         dump($remoteControl);
         $remoteControl->undoButtonWasPushed();
     }

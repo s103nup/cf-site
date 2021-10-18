@@ -27,13 +27,13 @@ class SimpleRemoteControl
         $this->slotOff[$slot] = $commandOff;
     }
 
-    public function onButtonWasPressed($slot)
+    public function onButtonWasPushed($slot)
     {
         $this->slotOn[$slot]->execute();
         $this->undoCommand = $this->slotOn[$slot];
     }
 
-    public function offButtonWasPressed($slot)
+    public function offButtonWasPushed($slot)
     {
         $this->slotOff[$slot]->execute();
         $this->undoCommand = $this->slotOff[$slot];
