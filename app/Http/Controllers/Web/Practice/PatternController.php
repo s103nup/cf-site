@@ -21,7 +21,6 @@ use App\Practice\Command\GarageDoorUpCommand;
 use App\Practice\Command\SimpleRemoteControl;
 use App\Practice\Factory\Creator\NyPizzaStore;
 use App\Practice\Command\GarageDoorDownCommand;
-use App\Practice\Command\GarageDoorOpenCommand;
 use App\Practice\Command\StereoOnWithCdCommand;
 use App\Practice\Observer\CurrentDetailDisplay;
 use App\Practice\Factory\Creator\ChicagoPizzaStore;
@@ -95,38 +94,56 @@ class PatternController extends Controller
 
     public function command(): void
     {
+        // Basic
+        // $remoteControl = new SimpleRemoteControl();
+        
+        // $livingRoomLight = new Light('Living Room');
+        // $kitchenLight = new Light('Kitchen');
+        // $garageDoor = new GarageDoor('');
+        // $livingRoomStereo = new Stereo('Living Room');
+
+        // $livingRoomLightOn = new LightOnCommand($livingRoomLight);
+        // $livingRoomLightOff = new LightOffCommand($livingRoomLight);
+        // $kitchenLightOn = new LightOnCommand($kitchenLight);
+        // $kitchenLightOff = new LightOffCommand($kitchenLight);
+        
+        // $garageDoorUp = new GarageDoorUpCommand($garageDoor);
+        // $garageDoorDown = new GarageDoorDownCommand($garageDoor);
+
+        // $livingRoomStereoOnWithCd = new StereoOnWithCdCommand($livingRoomStereo);
+        // $livingRoomStereoOff = new StereoOffCommand($livingRoomStereo);
+
+        // $remoteControl->setCommand(0, $livingRoomLightOn, $livingRoomLightOff);
+        // $remoteControl->setCommand(1, $kitchenLightOn, $kitchenLightOff);
+        // $remoteControl->setCommand(2, $garageDoorUp, $garageDoorDown);
+        // $remoteControl->setCommand(3, $livingRoomStereoOnWithCd, $livingRoomStereoOff);
+
+        // $remoteControl->onButtonWasPressed(0);
+        // $remoteControl->offButtonWasPressed(0);
+        // $remoteControl->onButtonWasPressed(1);
+        // $remoteControl->offButtonWasPressed(1);
+        // $remoteControl->onButtonWasPressed(2);
+        // $remoteControl->offButtonWasPressed(2);
+        // $remoteControl->onButtonWasPressed(3);
+        // $remoteControl->offButtonWasPressed(3);
+
+        // Undo
         $remoteControl = new SimpleRemoteControl();
         
         $livingRoomLight = new Light('Living Room');
-        $kitchenLight = new Light('Kitchen');
-        $garageDoor = new GarageDoor('');
-        $livingRoomStereo = new Stereo('Living Room');
 
         $livingRoomLightOn = new LightOnCommand($livingRoomLight);
         $livingRoomLightOff = new LightOffCommand($livingRoomLight);
-        $kitchenLightOn = new LightOnCommand($kitchenLight);
-        $kitchenLightOff = new LightOffCommand($kitchenLight);
-        
-        $garageDoorUp = new GarageDoorUpCommand($garageDoor);
-        $garageDoorDown = new GarageDoorDownCommand($garageDoor);
-
-        $livingRoomStereoOnWithCd = new StereoOnWithCdCommand($livingRoomStereo);
-        $livingRoomStereoOff = new StereoOffCommand($livingRoomStereo);
 
         $remoteControl->setCommand(0, $livingRoomLightOn, $livingRoomLightOff);
-        $remoteControl->setCommand(1, $kitchenLightOn, $kitchenLightOff);
-        $remoteControl->setCommand(2, $garageDoorUp, $garageDoorDown);
-        $remoteControl->setCommand(3, $livingRoomStereoOnWithCd, $livingRoomStereoOff);
-
-        dump($remoteControl);
 
         $remoteControl->onButtonWasPressed(0);
         $remoteControl->offButtonWasPressed(0);
-        $remoteControl->onButtonWasPressed(1);
-        $remoteControl->offButtonWasPressed(1);
-        $remoteControl->onButtonWasPressed(2);
-        $remoteControl->offButtonWasPressed(2);
-        $remoteControl->onButtonWasPressed(3);
-        $remoteControl->offButtonWasPressed(3);
+        dump($remoteControl);
+        $remoteControl->undoButtonWasPushed();
+        $remoteControl->offButtonWasPressed(0);
+        $remoteControl->onButtonWasPressed(0);
+        dump($remoteControl);
+        $remoteControl->undoButtonWasPushed();
     }
 }

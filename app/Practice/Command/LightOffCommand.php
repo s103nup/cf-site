@@ -17,4 +17,9 @@ class LightOffCommand implements CommandInterface
     {
         $this->light->off();
     }
+
+    public function undo(): void
+    {
+        $this->light->on();
+    }
 }
