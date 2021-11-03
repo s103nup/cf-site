@@ -4,7 +4,7 @@ namespace App\Practice\Command;
 use App\Practice\Command\Stereo;
 use App\Practice\Command\CommandInterface;
 
-class StereoOffCommand implements CommandInterface
+class StereoOnCommand implements CommandInterface
 {
     private $stereo;
 
@@ -15,11 +15,11 @@ class StereoOffCommand implements CommandInterface
 
     public function execute(): void
     {
-        $this->stereo->off();
+        $this->stereo->on();
     }
     
     public function undo(): void
     {
-        $this->stereo->on();
+        $this->stereo->off();
     }
 }
