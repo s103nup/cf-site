@@ -3,16 +3,19 @@
 namespace App\Practice\Adapter;
 
 use App\Practice\Adapter\Interfaces\Turkey;
+use App\Practice\Helper;
 
 class WildTurkey implements Turkey
 {
+    use Helper;
+    
     public function fly(): void
     {
-        dump('I\'m flying a short distance');
+        $this->echoWithEol('I\'m flying a short distance');
     }
     
     public function gobble(): void
     {
-        dump('Gobble gobble');
+        $this->echoWithEol('Gobble gobble');
     }
 }

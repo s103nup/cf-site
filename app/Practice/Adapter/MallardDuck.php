@@ -3,16 +3,19 @@
 namespace App\Practice\Adapter;
 
 use App\Practice\Adapter\Interfaces\Duck;
+use App\Practice\Helper;
 
 class MallardDuck implements Duck
 {
+    use Helper;
+
     public function fly(): void
     {
-        dump('I\'m flying');
+        $this->echoWithEol('I\'m flying');
     }
 
     public function quack(): void
     {
-        dump('Quack');
+        $this->echoWithEol('Quack');
     }
 }
