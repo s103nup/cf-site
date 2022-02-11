@@ -25,6 +25,7 @@ Route::match(['get', 'post'], 'log-tools', function () {
 
 Route::group(['prefix' => 'practice', 'namespace' => 'Web\Practice'], function () {
     Route::group(['prefix' => 'pattern'], function () {
+        Route::get('adapter', 'PatternController@adapter');
         Route::get('abstract-factory', 'PatternController@abstractFactory');
         Route::get('decorator', 'PatternController@decorator');
         Route::get('factory', 'PatternController@factory');
