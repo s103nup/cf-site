@@ -10,16 +10,6 @@ class TemplateMethodPatternTest extends TestCase
 {
     use Helper;
 
-    /**
-     * Setup the test environment.
-     *
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-    }
-
     public function testSteepTea(): void
     {
         $expectRows = [
@@ -46,6 +36,5 @@ class TemplateMethodPatternTest extends TestCase
 
         $beverage = new Coffee();
         $beverage->prepareRecipe();
-        # 288
     }
 }

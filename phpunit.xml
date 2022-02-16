@@ -2,8 +2,11 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" bootstrap="vendor/autoload.php" colors="true">
   <coverage processUncoveredFiles="true">
     <include>
-      <directory suffix=".php">./app</directory>
+      <directory suffix=".php">./app/Practice</directory>
     </include>
+    <report>
+      <text outputFile="coverage.txt" showUncoveredFiles="false" showOnlySummary="false" />
+    </report>
   </coverage>
   <testsuites>
     <testsuite name="Unit">
